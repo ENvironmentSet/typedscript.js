@@ -1,0 +1,31 @@
+{
+  "name": "DynamicTypedScript",
+  "version": "0.0.1",
+  "description": "",
+  "private": true,
+  "keywords": [
+    "type",
+    "TypedScript"
+  ],
+  "bugs": {
+    "email": "sbshw1@naver.com"
+  },
+  "license": "GPL2",
+  "authors": [
+    "EnvironmentSet",
+    "CreeJee"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ENvironmentSet/DynamicTypedScript"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": "6.x",
+    "npm": "3.x"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}
