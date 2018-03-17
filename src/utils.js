@@ -6,7 +6,7 @@ module.exports = (function() {
 	ignore.$ = Symbol('partial<ignore argument>');
 	partial._ = Symbol('partial<lazy argument>');
 
-	const getType = value => toString.call(value).replace(/\[|object|\]| /g,'');
+	const getType = value => toString.call(value).replace(/\[|object|]| /g,'');
 
 	const identity = value => value;
 
@@ -18,39 +18,33 @@ module.exports = (function() {
 
 	const shift = prop('shift');
 
-	const bind = (fn, context) => function() { return fn.apply(context, arguments)};
+	const bind = (fn, context) => function() { return fn.apply(context, arguments) };
 
 	const getLength = list => list && length(list) >= 0 && length(list) < MAX_LIST_LENGTH ? length(list) : void 0;
-
-	const newArray = () => [];
 
 	const noop = () => {};
 
 	const not = value => !value;
 
+	const reduce = bloop(identity,
+		If(	(predicateResult, value, index, list) => getLength(list)-1 === index,
+			predicateResult => [true, predicateResult],
+			() => [false] // will use Monad<Nothing>
+		),
+		result => bind(shift(Array.prototype), result)());
+
 	const each = bloop(array, noop);
 
-	const map = bloop(newArray, ignore(If( ok => ok,
-		(ok ,value, result) => push(result).call(result, value)
+	const some = bloop(noop, Boolean, identity);
+
+	const map = bloop(constant([]), ignore(If( ok => ok,
+		(ok ,value, result) => bind(push(Array.prototype),result)(value)
 	), ignore._, ignore._, ignore.$, ignore.$, ignore._));
-
-	function reduce (list, predicate, result) {
-		each(list, (value) => {
-			return result = predicate(result, value);
-		});
-		return result;
-	}
-
-	function every (list, predicate) {
-		let result = true;
-		each(list, (value, index, list) => {
-			result = Boolean(predicate(value, index, list));
-		});
-		return result;
-	}
+	
+	const every = bloop(constant(true), Boolean, not);
 
 	function isArrayLike (list) {
-		return typeof getLength(list) === 'number' ? true : false;
+		return typeof getLength(list) === 'number';
 	}
 
 	function array (list) {
@@ -66,7 +60,7 @@ module.exports = (function() {
 	}
 
 	function isObject (value) {
-		return typeof value === 'null' || typeof value === 'undefined' ? false : true;
+		return not(getType(value) === 'Null' || getType(value) === 'Undefined');
 	}
 
 	function prop (name) {
@@ -96,13 +90,13 @@ module.exports = (function() {
 			let result = init(list);
 			if(isArrayLike(list)) {
 				for(let index = 0, length = getLength(list); index < length; index++) {
-					let memo = body(iteratee(list[index], index, list), list[index],  index, list, result);
-					if(stoper && stoper(memo)) break;
+					let memo = body(iteratee(list[index], index, list, result), list[index],  index, list, result);
+					if(stoper && stoper(memo)) return memo;
 				}
 			} else {
 				for(let index = 0, keys = Object.keys(object(list)), length = keys.length; index < length; index++) {
-					let memo = body(iteratee(list[keys[index]], keys[index], list), list[keys[index]], keys[index], list, result);
-					if(stoper && stoper(memo)) break;
+					let memo = body(iteratee(list[keys[index]], keys[index], list, result), list[keys[index]], keys[index], list, result);
+					if(stoper && stoper(memo)) return memo;
 				}
 			}
 			return result;
@@ -124,7 +118,7 @@ module.exports = (function() {
 		let args = rest(arguments);
 		return function() {
 			let newArgs = arrayCopy(arguments);
-			let callArgs = newArray();
+			let callArgs = constant([])();
 			let shiftArg = bind(shift(Array.prototype), newArgs);
 			let pushArg = bind(push(Array.prototype), callArgs);
 			reduce(args,
@@ -137,6 +131,13 @@ module.exports = (function() {
 				), callArgs);
 			return fn.apply(this, callArgs);
 		};
+	}
+
+	function nameSpace (predicate) {
+		let space = {};
+		return function() {
+			return predicate.apply(space, arguments);
+		}
 	}
 
 	return {
@@ -160,7 +161,8 @@ module.exports = (function() {
 		'reduce' : reduce,
 		'map' : map,
 		'bind' : bind,
-		'newArray' : newArray,
-		'every' : every
+		'every' : every,
+		'some' : some,
+		'nameSpace' : nameSpace
 	};
 })();
