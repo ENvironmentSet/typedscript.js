@@ -1,33 +1,25 @@
 'use strict';
 
-class Type {
-	constructor(..._interface) {
-		this._inteface = _interface;
+module.exports = (function() {
+	const T = require('../utils');
+
+	class _Type {
+		constructor(_interface) {
+			if(T.not(T.isArrayLike(_interface))) throw new TypeError(`${_interface} is not interface of type.`);
+			if(T.getType(_interface) === 'Function') this.type = [_interface];
+			else this.type = _interface;
+			if(T.not(T.every(this.type, t => t instanceof _Type || t.prototype instanceof _Type)))
+				throw new TypeError(`${_interface} is not interface of type`);
+		}
+
+		validator() {
+			return true;
+		}
+
+		toString() {
+			throw `Type<${this._interface}>`;
+		}
 	}
 
-	validator() {
-		throw new Error('called non-init validator');
-	}
-
-	toString() {
-		throw new Error('called non-init toString');
-	}
-
-	valueOf () {
-		throw new Error('called non-init valueOf');
-	}
-
-	convert () {
-		throw new Error('called non-init convert');
-	}
-
-	unwrap () {
-		throw new Error('called non-init unwrap');
-	}
-
-	assignment () {
-		throw new Error('called non-init assignment');
-	}
-}
-
-module.exports = Type;
+	return _Type;
+})();

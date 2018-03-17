@@ -1,11 +1,12 @@
 'use strict';
 
 module.exports = (function() {
+	const T = require('../utils');
 	const Type = require('./type');
 
-	class _Undefined extends Type{
-		constructor() {
-			super();
+	class _Refernce extends Type{
+		constructor(_interface) {
+			super(_interface);
 		}
 
 		validator() {
@@ -17,5 +18,5 @@ module.exports = (function() {
 		}
 	}
 
-	return ;
+	return _Refernce;
 })();
