@@ -1,15 +1,13 @@
 'use strict';
 
 module.exports = (function() {
-	const T = require('../utils');
+	const _ = require('../util');
 
 	class _Type {
-		constructor(_interface) {
-			if(T.not(T.isArrayLike(_interface))) throw new TypeError(`${_interface} is not interface of type.`);
-			if(T.getType(_interface) === 'Function') this.type = [_interface];
-			else this.type = _interface;
-			if(T.not(T.every(this.type, t => t instanceof _Type || t.prototype instanceof _Type)))
-				throw new TypeError(`${_interface} is not interface of type`);
+		constructor(shape) {
+			let typeShape = _.toArray(shape);
+			_.throw(_.every(typeShape, _(_.isExtends(_, _Type))), _.constant());
+			this.shape = shape;
 		}
 
 		validator() {
@@ -17,7 +15,7 @@ module.exports = (function() {
 		}
 
 		toString() {
-			throw `Type<${this._interface}>`;
+			throw `Type<${this.shape}>`;
 		}
 	}
 

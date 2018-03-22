@@ -5,6 +5,7 @@ module.exports = (function() {
 	ignore._ = Symbol('ignore<non-ignore argument>');
 	ignore.$ = Symbol('partial<ignore argument>');
 	partial._ = Symbol('partial<lazy argument>');
+	callFunc._ = Symbol('callFunc<No specify context>');
 
 	const getType = value => toString.call(value).replace(/\[|object|]| /g,'');
 
@@ -14,11 +15,11 @@ module.exports = (function() {
 
 	const length = prop('length');
 
-	const push = prop('push');
+	const push = method('push');
 
-	const shift = prop('shift');
+	const shift = method('shift');
 
-	const bind = (fn, context) => function() { return fn.apply(context, arguments) };
+	const bind = (fn, context) => function() { return callFunc(fn, context, ...arguments) };
 
 	const getLength = list => list && length(list) >= 0 && length(list) < MAX_LIST_LENGTH ? length(list) : void 0;
 
@@ -26,22 +27,164 @@ module.exports = (function() {
 
 	const not = value => !value;
 
-	const reduce = bloop(identity,
-		If(	(predicateResult, value, index, list) => getLength(list)-1 === index,
-			predicateResult => [true, predicateResult],
-			() => [false] // will use Monad<Nothing>
-		),
-		result => bind(shift(Array.prototype), result)());
+	const each = loop(nameSpace(
+		If( list => isArrayLike(list),
+				function(list, iteratee) {
+					this.list = list;
+					this.iteratee = iteratee;
+					this.length = getLength(list);
+					this.flag = 'list';
+					this.count = 0;
+					return this;
+				},
+				function(list, iteratee) {
+					this.list = object(list);
+					this.keys = Object.keys(this.list);
+					this.length = getLength(this.keys);
+					this.iteratee = iteratee;
+					this.flag = 'object';
+					this.count = 0;
+					return this;
+				}
+				)),
+		status => status.count < status.length,
+		status => status.count++,
+		If( status => status.flag === 'list',
+				status => callFunc(status.iteratee, callFunc._, status.list[status.count], status.count, status.list),
+				status => callFunc(status.iteratee, callFunc._, status.list[status.keys[status.count]], status.keys[status.count], status.list)
+		), prop('list'));
 
-	const each = bloop(array, noop);
+	const reduce = loop(nameSpace(
+		If( list => isArrayLike(list),
+			function(list, iteratee) {
+				this.list = list;
+				this.iteratee = iteratee;
+				this.length = getLength(list);
+				this.flag = 'list';
+				this.count = 0;
+				this.result = null;
+				return this;
+			},
+			function(list, iteratee) {
+				this.list = object(list);
+				this.keys = Object.keys(this.list);
+				this.length = getLength(this.keys);
+				this.iteratee = iteratee;
+				this.flag = 'object';
+				this.count = 0;
+				this.result = null;
+				return this;
+			}
+		)),
+		status => status.count < status.length,
+		status => status.count++,
+		If( status => status.flag === 'list',
+			status => status.result = callFunc(status.iteratee, callFunc._, status.result, status.list[status.count]),
+			status => status.result = callFunc(status.iteratee, callFunc._, status.result, status.list[status.keys[status.count]])
+		), prop('result'));
 
-	const some = bloop(noop, Boolean, identity);
+	const map = loop(nameSpace(
+		If( list => isArrayLike(list),
+			function(list, iteratee) {
+				this.list = list;
+				this.iteratee = iteratee;
+				this.length = getLength(list);
+				this.flag = 'list';
+				this.result = [];
+				this.count = 0;
+				return this;
+			},
+			function(list, iteratee) {
+				this.list = object(list);
+				this.keys = Object.keys(this.list);
+				this.length = getLength(this.keys);
+				this.iteratee = iteratee;
+				this.flag = 'object';
+				this.result = [];
+				this.count = 0;
+				return this;
+			}
+		)),
+		status => status.count < status.length,
+		status => status.count++,
+		If( status => status.flag === 'list',
+			status => push(status.result, callFunc(status.iteratee, callFunc._, status.list[status.count], status.count, status.list)),
+			status => push(status.result, callFunc(status.iteratee, callFunc._, status.list[status.keys[status.count]], status.keys[status.count], status.list))
+		), prop('result'));
 
-	const map = bloop(constant([]), ignore(If( ok => ok,
-		(ok ,value, result) => bind(push(Array.prototype),result)(value)
-	), ignore._, ignore._, ignore.$, ignore.$, ignore._));
-	
-	const every = bloop(constant(true), Boolean, not);
+	const find = loop(nameSpace(
+		If( list => isArrayLike(list),
+			function(list, iteratee) {
+				this.list = list;
+				this.iteratee = iteratee;
+				this.length = getLength(list);
+				this.flag = 'list';
+				this.result = undefined;
+				this.count = 0;
+				return this;
+			},
+			function(list, iteratee) {
+				this.list = object(list);
+				this.keys = Object.keys(this.list);
+				this.length = getLength(this.keys);
+				this.iteratee = iteratee;
+				this.flag = 'object';
+				this.result = undefined;
+				this.count = 0;
+				return this;
+			}
+		)),
+		status => status.count < status.length && status.result === undefined,
+		status => status.count++,
+		If( status => status.flag === 'list',
+			If( status => status.result = callFunc(status.iteratee, callFunc._, status.list[status.count], status.count, status.list),
+					status => status.result = status.list[status.count],
+					status => status.result = undefined
+			),
+			If( status => status.result = callFunc(status.iteratee, callFunc._, status.list[status.keys[status.count]], status.keys[status.count], status.list),
+				status => status.result = status.list[status.keys[status.count]],
+				status => status.result = undefined
+			)
+		), prop('result'));
+
+	const filter = loop(nameSpace(
+		If( list => isArrayLike(list),
+			function(list, iteratee) {
+				this.list = list;
+				this.iteratee = iteratee;
+				this.length = getLength(list);
+				this.flag = 'list';
+				this.count = 0;
+				this.result = [];
+				return this;
+			},
+			function(list, iteratee) {
+				this.list = object(list);
+				this.keys = Object.keys(this.list);
+				this.length = getLength(this.keys);
+				this.iteratee = iteratee;
+				this.flag = 'object';
+				this.count = 0;
+				this.result = [];
+				return this;
+			}
+		)),
+		status => status.count < status.length,
+		status => status.count++,
+		If( status => status.flag === 'list',
+			If( status => callFunc(status.iteratee, callFunc._, status.list[status.count], status.count, status.list),
+					status => push(status.result, status.list[status.count])
+				),
+			If( status => callFunc(status.iteratee, callFunc._, status.list[status.keys[status.count]], status.keys[status.count], status.list),
+				status => push(status.result, status.list[status.keys[status.count]])
+			)
+		), prop('result'));
+
+	function every (list, iteratee) {
+		return find(list, (value, index, list) => {
+			return not(iteratee(value, index, list));
+		}) === undefined;
+	}
 
 	function isArrayLike (list) {
 		return typeof getLength(list) === 'number';
@@ -64,7 +207,13 @@ module.exports = (function() {
 	}
 
 	function prop (name) {
-		return object => isObject(object) ? object[name] : undefined;
+		return obj => object(obj)[name];
+	}
+	
+	function method (name) {
+		return function(object) {
+			return isObject(object) ? callFunc(object[name], object, ...rest(arguments)) : undefined;
+		}
 	}
 
 	function rest (list, count = 1) {
@@ -73,34 +222,34 @@ module.exports = (function() {
 
 	function rester (fn, count) {
 		return function() {
-			return fn.apply(this, rest(arguments, count));
+			return callFunc(fn, this, ...rest(arguments, count));
 		};
 	}
 
 	function If (vaildator, body, except) {
 		return function() {
-			return vaildator.apply(this, arguments) ?
-				body && body.apply(this, arguments) :
-				except && except.apply(this, arguments);
+			return callFunc(vaildator, this, ...arguments) ?
+				callFunc(body, this, ...arguments) :
+				callFunc(except, this, ...arguments);
 		};
 	}
 
-	function bloop (init, body, stoper) { // need chain now!!!!!
-		return function(list, iteratee) {
-			let result = init(list);
-			if(isArrayLike(list)) {
-				for(let index = 0, length = getLength(list); index < length; index++) {
-					let memo = body(iteratee(list[index], index, list, result), list[index],  index, list, result);
-					if(stoper && stoper(memo)) return memo;
-				}
-			} else {
-				for(let index = 0, keys = Object.keys(object(list)), length = keys.length; index < length; index++) {
-					let memo = body(iteratee(list[keys[index]], keys[index], list, result), list[keys[index]], keys[index], list, result);
-					if(stoper && stoper(memo)) return memo;
-				}
-			}
-			return result;
+	function While (vaildator, body, resolver) {
+		return function(init) {
+			const status = init(...rest(arguments));
+			while(vaildator(status)) body(status);
+			return callFunc(resolver, callFunc._, status);
 		};
+	}
+
+	function loop (init, vaildator, after, body, resolver) {
+		const inside = While(vaildator, status => {
+			body(status);
+			after(status);
+		}, resolver);
+		return function() {
+			return inside(init, ...arguments);
+		}
 	}
 
 	function partial (fn) {
@@ -108,9 +257,8 @@ module.exports = (function() {
 		return function() {
 			let callArgs = arrayCopy(args);
 			let newArgs = arrayCopy(arguments);
-			let shiftArg = bind(shift(Array.prototype), newArgs);
-			each(callArgs,If( value => value === partial._, (value, index, list) => list[index] = shiftArg()));
-			return fn.apply(this, callArgs);
+			each(callArgs,If( value => value === partial._, (value, index, list) => list[index] = shift(newArgs)));
+			return callFunc(fn, this, ...callArgs);
 		}
 	}
 
@@ -119,25 +267,31 @@ module.exports = (function() {
 		return function() {
 			let newArgs = arrayCopy(arguments);
 			let callArgs = constant([])();
-			let shiftArg = bind(shift(Array.prototype), newArgs);
-			let pushArg = bind(push(Array.prototype), callArgs);
 			reduce(args,
 				If( (result, value) => value === ignore._,
-					result => { pushArg(shiftArg()); return result;},
+					result => { push(callArgs, shift(newArgs)); return result;},
 					If( (result, value) => value === ignore.$,
-						(result) => {  shiftArg(); return result;},
-						(result, value) => { pushArg(value); return result;}
+						(result) => {  shift(newArgs); return result;},
+						(result, value) => { push(callArgs, value); return result;}
 						)
 				), callArgs);
-			return fn.apply(this, callArgs);
+			return callFunc(fn, this, ...callArgs);
 		};
 	}
 
 	function nameSpace (predicate) {
 		let space = {};
 		return function() {
-			return predicate.apply(space, arguments);
+			return callFunc(predicate, space, ...arguments);
 		}
+	}
+
+	function isExtends (obj, fn) {
+		return Object.create(object(obj).prototype || Object.getPrototypeOf(object(obj))) instanceof fn;
+	}
+
+	function callFunc (fn, context) {
+		return typeof fn === 'function' ? fn.apply(object(context), rest(arguments, 2)) : void fn;
 	}
 
 	return {
@@ -156,13 +310,18 @@ module.exports = (function() {
 		'if' : If,
 		'partial' : partial,
 		'getType' : getType,
-		'each' : each,
 		'ignore' : ignore,
+		'bind' : bind,
+		'nameSpace' : nameSpace,
+		'method' : method,
+		'isExtends' : isExtends,
+		'while' : While,
+		'loop' : loop,
+		'callFunc' : callFunc,
+		'each' : each,
 		'reduce' : reduce,
 		'map' : map,
-		'bind' : bind,
-		'every' : every,
-		'some' : some,
-		'nameSpace' : nameSpace
+		'find' : find,
+		'filter' : filter
 	};
 })();

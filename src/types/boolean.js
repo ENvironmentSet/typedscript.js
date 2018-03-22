@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = (function() {
-	const T = require('../utils');
 	const Type = require('./type');
 
 	class _Boolean extends Type{

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (function() {
-	let variable = Object.assign(require('./src/variable'),Object.assign(require('./src/utils'), {
+	let variable = Object.assign(require('./src/variable'), require('./src/util'), {
 		'Undefined' : require('./src/types/undefined'),
 		'Null' : require('./src/types/null'),
 		'Integer' : require('./src/types/integer'),
@@ -14,6 +14,6 @@ module.exports = (function() {
 		'Interface' : require('./src/types/interface'),
 		'Refernce' : require('./src/types/refernce'),
 		'Function' : require('./src/types/function'),
-	}));
+	});
 	return variable;
 })();
