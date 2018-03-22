@@ -5,8 +5,8 @@ module.exports = (function() {
 
 	class _Type {
 		constructor(shape) {
-			let typeShape = _.toArray(shape);
-			_.throw(_.every(typeShape, _(_.isExtends(_, _Type))), _.constant());
+			let typeShape =_.flatten(_.toArray(arguments));
+			if(!_.every(typeShape, _(_.isExtends, _, _Type))) throw new TypeError(`${shape} is invalid shape of type.`);
 			this.shape = shape;
 		}
 

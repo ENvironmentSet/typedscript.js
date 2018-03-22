@@ -50,5 +50,13 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-src/utils.js
 
+/src/utils.js
+.idea/DynamicTypedScript.iml
+.idea/inspectionProfiles/
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+dist/
+node_modules/

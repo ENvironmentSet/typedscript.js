@@ -3,8 +3,8 @@ const assert = require('assert');
 
 describe('Vairable test suit', function () {
 
-	it('undefined type test', function () {
-
+	it('type test', function () {
+		console.log(new T.Type(T.Type));
 	});
 
 });

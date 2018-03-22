@@ -14,6 +14,7 @@ module.exports = (function() {
 		'Interface' : require('./src/types/interface'),
 		'Refernce' : require('./src/types/refernce'),
 		'Function' : require('./src/types/function'),
+		'Type' : require('./src/types/type')
 	});
 	return variable;
 })();

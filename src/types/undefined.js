@@ -2,6 +2,7 @@
 
 module.exports = (function() {
 	const Type = require('./type');
+	const _ = require('../util');
 
 	class _Undefined extends Type{
 		constructor() {
