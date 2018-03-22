@@ -1,21 +1,30 @@
 'use strict';
 
 module.exports = (function() {
-	const _ = require('../util');
+	const _ = require('../utils');
 
 	class _Type {
-		constructor(shape) {
-			let typeShape =_.flatten(_.toArray(arguments));
-			if(!_.every(typeShape, _(_.isExtends, _, _Type))) throw new TypeError(`${shape} is invalid shape of type.`);
-			this.shape = shape;
+		constructor(...shapes) {
+			let typeShape =_.flatten(shapes);
+			if(_.some(typeShape, _.negate(_(_.isExtends, _, _Type)))) throw new TypeError(`${shapes} is invalid shape of type.`);
+			this.shape = shapes;
 		}
 
-		validator() {
+		static validator() {
+			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
 			return true;
 		}
 
+		static resolveShape (shape) {
+
+		}
+
+		validator () {
+			return this.constructor.validator.apply(this, arguments);
+		}
+
 		toString() {
-			throw `Type<${this.shape}>`;
+			return `Type<${this.shape}>`;
 		}
 	}
 

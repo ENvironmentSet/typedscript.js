@@ -51,7 +51,6 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-/src/utils.js
 .idea/DynamicTypedScript.iml
 .idea/inspectionProfiles/
 .idea/jsLibraryMappings.xml

@@ -6,7 +6,7 @@ module.exports = (function() {
 	class Variable {
 		constructor(type, value) {
 			if(!type instanceof Type) throw new TypeError(`${type} is not a extend of Type Object`);
-			if(!type.validator(value)) throw new TypeError(`${value} is invalid value as value of Variable<${type.toString()}>`);
+			if(!type.validator(value)) throw new TypeError(`<${value}> is invalid value as value of Variable<${type.toString()}>`);
 			this.value = value;
 			this.type = type;
 		}

@@ -2,14 +2,20 @@
 
 module.exports = (function() {
 	const Type = require('./type');
+	const _ = require('../utils');
 
 	class _Integer extends Type{
 		constructor() {
 			super(_Integer);
 		}
 
-		validator(value) {
-			return T.getType(value) === 'Number' && Number.isInteger(value);
+		static validator(value) {
+			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
+			return toString.call(value) === '[object Number]' && Number.isInteger(value);
+		}
+
+		validator () {
+			return this.constructor.validator.apply(this, arguments);
 		}
 
 		toString() {

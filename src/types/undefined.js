@@ -2,15 +2,20 @@
 
 module.exports = (function() {
 	const Type = require('./type');
-	const _ = require('../util');
+	const _ = require('../utils');
 
 	class _Undefined extends Type{
 		constructor() {
 			super(_Undefined);
 		}
 
-		validator(value) {
-			return T.getType(value) === 'Undefined';
+		static validator(value) {
+			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
+			return value === undefined;
+		}
+
+		validator () {
+			return this.constructor.validator.apply(this, arguments);
 		}
 
 		toString() {

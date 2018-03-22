@@ -1,10 +1,19 @@
 const T = require('../index');
-const assert = require('assert');
 
 describe('Vairable test suit', function () {
 
-	it('type test', function () {
-		console.log(new T.Type(T.Type));
+	it('Variable<Array> test', function () {
+		let x = new T.Array(new T.Integer);
+		console.log(new T(x, [1, 2, 3]));
+	});
+
+	it('Variable<Array> Error test', function () {
+		let x = new T.Array(new T.Integer);
+		try{
+			console.log(new T(x, [1, 2, 3.1]));
+		} catch (e) {
+			console.log(e);
+		}
 	});
 
 });
