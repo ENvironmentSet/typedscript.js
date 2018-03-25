@@ -11,8 +11,7 @@ module.exports = (function() {
 
 		static validator(values) {
 			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
-			let type = _.first(this.shape);
-			return !_.some(values, _.negate(_.pipe(_.identity, _.bind(type.validator, type))));
+			return !_.some(values, _.negate(_.pipe(_.identity, _.bind(this.shape.validator, this.shape)))) && _.isArray(values);
 		}
 
 		validator () {

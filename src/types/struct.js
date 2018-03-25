@@ -5,12 +5,19 @@ module.exports = (function() {
 	const _ = require('../utils');
 
 	class _Struct extends Type{
-		constructor() {
-			super();
+		constructor(shapes) {
+			super(shapes);
 		}
 
-		static validator() {
+		//shape Struct< a : T.Integer, b : T.Boolean >
+
+		static validator(struct) {
 			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
+			return !_.some(this.shape, (value, index) => {
+				if(struct.hasOwnProperty(index)) {
+					return !value.validator(struct[index]);
+				} else return true;
+			});
 		}
 
 		validator () {
@@ -18,7 +25,7 @@ module.exports = (function() {
 		}
 
 		toString() {
-
+   		return `Struct<${this.shape}>`
 		}
 	}
 

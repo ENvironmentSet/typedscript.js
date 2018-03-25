@@ -2,18 +2,9 @@ const T = require('../index');
 
 describe('Vairable test suit', function () {
 
-	it('Variable<Array> test', function () {
-		let x = new T.Array(new T.Integer);
-		console.log(new T(x, [1, 2, 3]));
-	});
-
-	it('Variable<Array> Error test', function () {
-		let x = new T.Array(new T.Integer);
-		try{
-			console.log(new T(x, [1, 2, 3.1]));
-		} catch (e) {
-			console.log(e);
-		}
+	it('Variable<Struct< a : T.Integer<Integer>, b : T.Boolean<Boolean>>> test', function () {
+		let x = new T.Struct({ a : new T.Integer, b : new T.Boolean});
+		console.log(new T(x, { a : 1, b : true}));
 	});
 
 });

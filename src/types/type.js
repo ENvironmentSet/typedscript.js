@@ -4,9 +4,8 @@ module.exports = (function() {
 	const _ = require('../utils');
 
 	class _Type {
-		constructor(...shapes) {
-			let typeShape =_.flatten(shapes);
-			if(_.some(typeShape, _.negate(_(_.isExtends, _, _Type)))) throw new TypeError(`${shapes} is invalid shape of type.`);
+		constructor(shapes) {
+			if(_.some(shapes, _.negate(_(_.isExtends, _, _Type)))) throw new TypeError(`${shapes} is invalid shape of type.`);
 			this.shape = shapes;
 		}
 
