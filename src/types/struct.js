@@ -6,10 +6,8 @@ module.exports = (function() {
 
 	class _Struct extends Type{
 		constructor(shapes) {
-			super(shapes);
+			super(shapes, _(_.every, _, _(_.isExtends, _, Type)));
 		}
-
-		//shape Struct< a : T.Integer, b : T.Boolean >
 
 		static validator(struct) {
 			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
