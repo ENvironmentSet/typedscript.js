@@ -5,16 +5,14 @@ module.exports = (function() {
 	const _ = require('../utils');
 
 	class _Function extends Type{
-		constructor() {
-			super();
+		constructor(shape) {
+
+			super(shape);
 		}
 
 		static validator() {
 			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
-		}
 
-		validator () {
-			return this.constructor.validator.apply(this, arguments);
 		}
 
 		toString() {

@@ -28,11 +28,11 @@
     "npm": "3.x"
   },
   "dependencies": {
-    "mocha": "^5.0.4",
     "partial-js": "^1.1.4"
   },
   "devDependencies": {
     "babel-cli": "^7.0.0-beta.3",
-    "babel-preset-env": "^7.0.0-beta.3"
+    "babel-preset-env": "^7.0.0-beta.3",
+    "mocha": "^5.0.4"
   }
 }

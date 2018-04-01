@@ -13,15 +13,11 @@ module.exports = (function() {
 
 		static validator(struct) {
 			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
-			return !_.some(this.shape, (value, index) => {
+			return _.every(this.shape, (value, index) => {
 				if(struct.hasOwnProperty(index)) {
-					return !value.validator(struct[index]);
-				} else return true;
+					return value.validator(struct[index]);
+				} else return false;
 			});
-		}
-
-		validator () {
-			return this.constructor.validator.apply(this, arguments);
 		}
 
 		toString() {

@@ -6,16 +6,12 @@ module.exports = (function() {
 
 	class _Boolean extends Type{
 		constructor() {
-			super(_Boolean);
+			super(_Boolean, _.constant(true));
 		}
 
 		static validator(value) {
 			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
 			return toString.call(value) === '[object Boolean]';
-		}
-
-		validator () {
-			return this.constructor.validator.apply(this, arguments);
 		}
 
 		toString() {

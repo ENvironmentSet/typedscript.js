@@ -13,10 +13,6 @@ module.exports = (function() {
 			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
 		}
 
-		validator () {
-			return this.constructor.validator.apply(this, arguments);
-		}
-
 		toString() {
 
 		}

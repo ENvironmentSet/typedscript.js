@@ -6,16 +6,12 @@ module.exports = (function() {
 
 	class _Symbol extends Type{
 		constructor() {
-			super(_Symbol);
+			super(_Symbol, _.constant(true));
 		}
 
 		static validator(value) {
 			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
 			return toString.call(value) === '[object Symbol]';
-		}
-
-		validator () {
-			return this.constructor.validator.apply(this, arguments);
 		}
 
 		toString() {

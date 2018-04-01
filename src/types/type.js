@@ -4,18 +4,14 @@ module.exports = (function() {
 	const _ = require('../utils');
 
 	class _Type {
-		constructor(shapes) {
-			if(_.some(shapes, _.negate(_(_.isExtends, _, _Type)))) throw new TypeError(`${shapes} is invalid shape of type.`);
-			this.shape = shapes;
+		constructor(shapes, predicate, init = _.identity) {
+			if(!predicate(shapes)) throw new TypeError(`${shapes} is invalid shape of type.`);
+			this.shape = init(shapes);
 		}
 
 		static validator() {
-			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
+			if(!_.isExtends(this, _Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
 			return true;
-		}
-
-		static resolveShape (shape) {
-
 		}
 
 		validator () {
