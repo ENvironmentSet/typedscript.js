@@ -14,6 +14,10 @@ module.exports = (function() {
 			return toString.call(value) === '[object Boolean]';
 		}
 
+		initializer(value) {
+			return value || false;
+		}
+
 		toString() {
 			return 'Boolean<Boolean>';
 		}

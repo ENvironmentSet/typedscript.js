@@ -14,6 +14,10 @@ module.exports = (function() {
 			return value === undefined;
 		}
 
+		initializer() {
+			return undefined;
+		}
+
 		toString() {
 			return 'Undefined<Undefined>';
 		}

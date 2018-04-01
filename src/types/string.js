@@ -14,6 +14,10 @@ module.exports = (function() {
 			return toString.call(value) === '[object String]';
 		}
 
+		initializer(value) {
+			return value || '';
+		}
+
 		toString() {
 			return 'String<String>'
 		}

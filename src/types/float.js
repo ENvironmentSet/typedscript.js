@@ -14,6 +14,10 @@ module.exports = (function() {
 			return toString.call(value) === '[object Number]';
 		}
 
+		initializer(value) {
+			return value || 0.0;
+		}
+
 		toString() {
 			return 'Float<Float>';
 		}

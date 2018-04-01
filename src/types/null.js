@@ -14,6 +14,10 @@ module.exports = (function() {
 			return toString.call(value) === '[object Null]';
 		}
 
+		initializer(value) {
+			return null;
+		}
+
 		toString() {
 			return 'Null<Null>';
 		}

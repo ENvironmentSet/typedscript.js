@@ -14,6 +14,10 @@ module.exports = (function() {
 			return toString.call(value) === '[object Number]' && Number.isInteger(value);
 		}
 
+		initializer(value) {
+			return value || 0;
+		}
+
 		toString() {
 			return 'Integer<Integer>';
 		}

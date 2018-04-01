@@ -16,6 +16,13 @@ module.exports = (function() {
 			} else throw new Error('Cannot call validator without binding this as instanceof class Type');
 		}
 
+		initializer(value) {
+			return value || _.reduce(this.shape, (memo, type) => {
+				memo.push(type.initializer());
+				return memo;
+			}, []);
+		}
+
 		toString() {
 			return `Array<${this.shape}>`;
 		}

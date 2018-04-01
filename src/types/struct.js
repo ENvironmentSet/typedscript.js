@@ -18,6 +18,13 @@ module.exports = (function() {
 			});
 		}
 
+		initializer(value) {
+			return value || _.reduce(this.shape, (memo, type, name) => {
+				memo[name] = type.initializer();
+				return memo;
+			}, {});
+		}
+
 		toString() {
    		return `Struct<${this.shape}>`
 		}

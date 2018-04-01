@@ -7,8 +7,7 @@ module.exports = (function() {
 		constructor(type, value) {
 			if (!type instanceof Type) throw new TypeError(`${type} is not a extend of Type Object`);
 			if (!type.validator(value)) throw new TypeError(`<${value}> is invalid value as value of Variable<${type.toString()}>`);
-			//기본값 설정 필요. type.init은 어떨까?
-			this.box = value;
+			this.box = type.initializer(value);
 			this.type = type;
 		}
 
@@ -38,7 +37,7 @@ module.exports = (function() {
 		}
 
 		set T (type) {
-			//기본값 설정 필요.
+			this.box = type.initializer();
 			return this.type = type;
 		}
 

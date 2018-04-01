@@ -14,6 +14,10 @@ module.exports = (function() {
 			return toString.call(value) === '[object Symbol]';
 		}
 
+		initializer(value) {
+			return value || Symbol('basic symbol');
+		}
+
 		toString() {
 			return 'Symbol<Symbol>'
 		}

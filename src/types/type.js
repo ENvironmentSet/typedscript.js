@@ -20,6 +20,10 @@ module.exports = (function() {
 			return this.constructor.validator.apply(this, arguments);
 		}
 
+		initializer(value) {
+			return value;
+		}
+
 		toString() {
 			return `Type<${this.shape}>`;
 		}

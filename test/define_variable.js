@@ -3,7 +3,7 @@ const T = require('../index');
 describe('Vairable test suit', function () {
 
 	it('should be ok <Atomic>', function () {
-		console.log(T(T.integer, 0));
+		console.log(T(T.integer, 1));
 		console.log(new T(T.integer, 0));
 	});
 

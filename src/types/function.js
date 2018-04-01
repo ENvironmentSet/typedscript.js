@@ -19,6 +19,10 @@ module.exports = (function() {
 			});
 		}
 
+		initializer(value) {
+			return value || _.noop;
+		}
+
 		toString() {
 			return `Function<${this.shape}>`
 		}
