@@ -11,9 +11,9 @@ module.exports = (function() {
 
 		static validator(struct) {
 			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
-			return _.every(this.shape, (value, index) => {
+			return _.every(this.shape, (type, index) => {
 				if(struct.hasOwnProperty(index)) {
-					return value.validator(struct[index]);
+					return type.validator(struct[index]);
 				} else return false;
 			});
 		}
