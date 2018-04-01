@@ -20,7 +20,7 @@ module.exports = (function() {
 		}
 
 		initializer(value) {
-			return value || _.noop;
+			return value[1] || _.noop;
 		}
 
 		toString() {
