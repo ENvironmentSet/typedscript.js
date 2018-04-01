@@ -18,6 +18,10 @@ module.exports = (function() {
 			});
 		}
 
+		static initializer() {
+			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
+		}
+
 		toString() {
 
 		}

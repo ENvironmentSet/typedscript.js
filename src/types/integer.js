@@ -14,7 +14,8 @@ module.exports = (function() {
 			return toString.call(value) === '[object Number]' && Number.isInteger(value);
 		}
 
-		initializer(value) {
+		static initializer(value) {
+			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
 			return value || 0;
 		}
 

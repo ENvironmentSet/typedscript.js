@@ -14,7 +14,8 @@ module.exports = (function() {
 			return value === undefined;
 		}
 
-		initializer() {
+		static initializer() {
+			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
 			return undefined;
 		}
 

@@ -14,7 +14,7 @@ module.exports = (function() {
 			return toString.call(value) === '[object String]';
 		}
 
-		initializer(value) {
+		static initializer(value) {
 			return value || '';
 		}
 

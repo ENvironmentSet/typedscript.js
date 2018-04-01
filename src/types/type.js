@@ -20,8 +20,13 @@ module.exports = (function() {
 			return this.constructor.validator.apply(this, arguments);
 		}
 
-		initializer(value) {
+		static initializer(value) {
+			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
 			return value;
+		}
+
+		initializer() {
+			return this.constructor.initializer.apply(this, arguments);
 		}
 
 		toString() {

@@ -18,7 +18,8 @@ module.exports = (function() {
 			});
 		}
 
-		initializer(value) {
+	  static initializer(value) {
+			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
 			return value || _.reduce(this.shape, (memo, type, name) => {
 				memo[name] = type.initializer();
 				return memo;

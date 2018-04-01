@@ -23,11 +23,12 @@ describe('Vairable test suit', function () {
 		let shape = T(T.Function, [T.integer, T.integer]);
 		let f = T(shape, [T.Function.defineBody, (x, y) => x+y]);
 		function call (func, ...params) {
-			if(typeof func._[1] === 'function' && func.T.validator(params)) {
-				return func._[1].apply(this, params);
+			if(typeof func._ === 'function' && func.T.validator(params)) {
+				return func._.apply(this, params);
 			} else return undefined;
 		}
 		console.log(call(f, 1, 2));
+		console.log(f);
 	});
 
 });
