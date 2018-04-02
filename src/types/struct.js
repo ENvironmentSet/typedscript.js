@@ -15,7 +15,7 @@ module.exports = (function() {
 				if(struct.hasOwnProperty(index)) {
 					return type.validator(struct[index]);
 				} else return false;
-			});
+			}) && _.size(this.shape) === _.size(struct);
 		}
 
 	  static initializer(value) {
