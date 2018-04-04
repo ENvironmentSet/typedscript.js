@@ -10,7 +10,7 @@ describe('Vairable test suit', function () {
 
 	it('should be ok <Atomic>', function () {
 		console.log(T(T.integer, 1));
-		console.log(new T(T.integer, 0));
+		console.log(T(T(T.integer, 0)));
 	});
 
 	it('should be ok <Struct>', function () {
@@ -35,5 +35,4 @@ describe('Vairable test suit', function () {
 		let f = T(shape, [T.Function.defineBody, (x, y) => x.a+x.b+y.a+y.b]);
 		console.log(call(f, { a : 1, b : 2}, { a : 3, b : 4}));
 	});
-
 });

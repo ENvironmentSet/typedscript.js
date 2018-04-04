@@ -6,6 +6,7 @@ module.exports = (function() {
 	const Type = require('./src/types/type');
 	function T (type, shape) { // shape equals value
 		if(typeof type === 'function' && _.isExtends(type, Type)) return new type(shape);
+		else if(_.isExtends(type, variable)) return type._;
 		else {
 			let tmp = new variable(type, shape);
 			if(new.target) return Object.assign(this, tmp);
@@ -35,8 +36,8 @@ module.exports = (function() {
 		'string' : new (require('./src/types/string')),
 		'Array' : require('./src/types/array'),
 		'Struct' : require('./src/types/struct'),
-		'Interface' : require('./src/types/interface'),
-		'Refernce' : require('./src/types/refernce'),
+		//'Interface' : require('./src/types/interface'),
+		//'Refernce' : require('./src/types/refernce'),
 		'Function' : require('./src/types/function'),
 		'Type' : Type
 	});

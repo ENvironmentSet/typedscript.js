@@ -20,7 +20,7 @@ module.exports = (function() {
 		}
 
 		bind(fn) {
-			return fn(this.value);
+			return fn(this.box);
 		}
 
 		get _ () {
