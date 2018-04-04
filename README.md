@@ -7,11 +7,11 @@ struct, interface 등 자바스크립트에 없는 강타입 언어에서의 컨
 
 다른 버전의 라이브러리는 feature/Type 브랜치에서 보실 수 있으십니다.
 
-#빠른 시작
+# 빠른 시작
 
 DynamicTypedScript(이하 DTS)는 함수형 프로그래밍을 지향하는 라이브러리입니다. 환상적인 '타입 나라'의 타입들이 여러분들의 코드를 환상적이고, 깔끔하며, 명료하게 바꾸어 줄 겁니다. 이거, 완전 Lint보다 멋지지 않나요?
 
-###타입들과의 첫 만남
+### 타입들과의 첫 만남
 
 자, 그럼 환상적인 타입의 세계에 들어가기 앞서, 어떤 타입들이 거주하고 있는지 알아보아야겠지요? 타입들은 크게 두 가지로 나눌 수 있습니다. 원형(shape)이 고정된 타입, 그리고 원형이 고정되지 않은 타입. 우리는 이 타입들은 각각 Atomic 타입과 Ion 타입이라 부릅니다.
 
@@ -35,7 +35,7 @@ T.Function <작업중>
 T.Interface <작업 예정>  
 T.Refernce <설계중>  
 
-###Hello, world
+### Hello, world
 
 그럼, 관례처럼 행해지는 의식을 치루도록 하겠습니다. 뭐냐고요? 있잖아요. 새로운 것을 배울때 늘 치루는 의식이요. 네 맞습니다. Hello. world지요.
 
@@ -66,16 +66,16 @@ T.Refernce <설계중>
     
  어떤가요? 이렇게, 타입 친구들이 여러분의 실수를 막아줍니다.
  
-###API
+### API
 DynamicTypedScript는 아래와 같이 불러오시면 됩니다.
 
     const T = require('DynamicTypedScript');
 
-####T
+#### T
 
 T는 제네릭 프로그래밍을 지원하는 함수입니다. 즉, 인자에 따라 작동(behavior)이 달라집니다.
 
-####T(Type\[, shape\])
+#### T(Type\[, shape\])
 
 * \[Type\] Type. Type을 확장하는, 인스턴스화할 타입의 생성자.
 * \[Object\] shape. 인스턴스화 할 타입의 shape를 담은 객체.
@@ -85,12 +85,12 @@ new Type(shape)를 통해 만들어진 타입 인스턴스를 반환합니다.
     let int = T(T.Integer);
     //eqalus let int = new T.Integer
 
-####T(variable)
+#### T(variable)
 * \[Variable\] variable. Variable을 확장하는 생상자를 통해 만들어진 객체.
 
 variable에 담긴(variable.box)의 값을 반환합니다.
 
-####\[new\]T(type, value)
+#### \[new\]T(type, value)
 * \[Type\] type. 인스턴스화 된 type.
 * \[value\] value. 새로 생성될 변수의 값이 될 값.
 
@@ -100,36 +100,36 @@ variable.type = type, variable.box = value를 갖는 새 변수를 생성하고,
     //or
     let y = new T(new T.Integer, 2);
     
-####T\[Type\]
+#### T\[Type\]
 Type의 생성자입니다.
     
     let intType = T.Integer;
     let arrType = T.Array;
     
-####T\[type\]
+#### T\[type\]
 
 Atomic 타입들은 lowercase로 명명된, 미리 생성된 인스턴스들이 존재합니다.
 
     let intType = T.integer;
     let floatType = T.float;
     
-####variable.validator(...params)
+#### variable.validator(...params)
 * ...\[Anything\] params
 variable의 type의 validator에게 params를 인자로서 넘긴 실행 결과를 반환한다. 
 
-####variable.toString()
+#### variable.toString()
 
 variable을 문자열로 표현한 형식을 반환한다.
 
 > 아직 개발진은 variable과 type의 표준 문자열 표기 형식을 정하지 못했습니다. 그러므로 디버깅 용도로만 사용하시길 바랍니다.
 
-####variable.bind(function)
+#### variable.bind(function)
 function(variable.box)의 실행 결과를 반환한다.
 
-####\[getter, setter\]variable._ \[=  newValue\]
+#### \[getter, setter\]variable._ \[=  newValue\]
 getter의 경우, variable.box를 반환하며, setter의 경우, 값을 검사한 후. 변수에 적합한 값이면 variable.box의 값을 newValue로 변경한다.
 
-####\[getter, setter\]variable.T \[newType\]
+#### \[getter, setter\]variable.T \[newType\]
 getter 경우, variable.type을 반환하고. setter의 경우, 값을 type.initializer를 통해 초기화 후 variable.type을 newType으로 변경한다. 
     
 #### Atomic 타입
@@ -162,7 +162,7 @@ Undefined 타입
 
 * undefined 값만 타입으로 허용. 
 
-####Ion 타입
+#### Ion 타입
 
 Array 타입
 
