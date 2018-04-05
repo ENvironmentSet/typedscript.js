@@ -40,5 +40,5 @@ module.exports = (function() {
 		//'Refernce' : require('./src/types/refernce'),
 		'Function' : require('./src/types/function'),
 		'Type' : Type
-	});
+	}, require('./src/libFunctions'));
 })();

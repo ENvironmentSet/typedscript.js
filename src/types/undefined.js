@@ -11,12 +11,12 @@ module.exports = (function() {
 
 		static validator(value) {
 			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
-			return value === undefined;
+			return value === void 0;
 		}
 
 		static initializer() {
 			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
-			return undefined;
+			return void 0;
 		}
 
 		toString() {

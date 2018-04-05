@@ -7,11 +7,11 @@ struct, interface 등 자바스크립트에 없는 강타입 언어에서의 컨
 
 다른 버전의 라이브러리는 feature/Type 브랜치에서 보실 수 있으십니다.
 
-# 빠른 시작
+### 빠른 시작
 
 DynamicTypedScript(이하 DTS)는 함수형 프로그래밍을 지향하는 라이브러리입니다. 환상적인 '타입 나라'의 타입들이 여러분들의 코드를 환상적이고, 깔끔하며, 명료하게 바꾸어 줄 겁니다. 이거, 완전 Lint보다 멋지지 않나요?
 
-### 타입들과의 첫 만남
+#### 타입들과의 첫 만남
 
 자, 그럼 환상적인 타입의 세계에 들어가기 앞서, 어떤 타입들이 거주하고 있는지 알아보아야겠지요? 타입들은 크게 두 가지로 나눌 수 있습니다. 원형(shape)이 고정된 타입, 그리고 원형이 고정되지 않은 타입. 우리는 이 타입들은 각각 Atomic 타입과 Ion 타입이라 부릅니다.
 
@@ -35,7 +35,7 @@ T.Function <작업중>
 T.Interface <작업 예정>  
 T.Refernce <설계중>  
 
-### Hello, world
+#### Hello, world
 
 그럼, 관례처럼 행해지는 의식을 치루도록 하겠습니다. 뭐냐고요? 있잖아요. 새로운 것을 배울때 늘 치루는 의식이요. 네 맞습니다. Hello. world지요.
 
@@ -66,7 +66,12 @@ T.Refernce <설계중>
     
  어떤가요? 이렇게, 타입 친구들이 여러분의 실수를 막아줍니다.
  
+#### 나만의 타입 정의하기.
+
+좋습니다, 우리는 이제 타입 친구들의 이름과 능력도 알고. 같이 혐업하는 방법도 알 게 되었습니다.
+ 
 ### API
+이 부분은, 정확하고 엄격한 정보를 좋아하시는 분들을 위해 준비되었습니다.
 DynamicTypedScript는 아래와 같이 불러오시면 됩니다.
 
     const T = require('DynamicTypedScript');
@@ -107,12 +112,18 @@ Type의 생성자입니다.
     let arrType = T.Array;
     
 #### T\[type\]
-
 Atomic 타입들은 lowercase로 명명된, 미리 생성된 인스턴스들이 존재합니다.
 
     let intType = T.integer;
     let floatType = T.float;
-    
+
+#### T.call(function, ...params)
+
+* \[Function\] function. 호출 될 Typed Function.
+* \[Anything\] ...params. function의 arguments.
+
+params가 Typed Function의 인자에 적합한 타입들을 가지면 호출되고, 결과값을 반환한다.
+   
 #### variable.validator(...params)
 * ...\[Anything\] params
 variable의 type의 validator에게 params를 인자로서 넘긴 실행 결과를 반환한다. 
