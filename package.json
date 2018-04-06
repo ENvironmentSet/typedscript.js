@@ -1,5 +1,5 @@
 {
-  "name": "DynamicTypedScript",
+  "name": "d-typedscript",
   "version": "0.0.1-beta.1",
   "description": "JavaScript library for strict programming.",
   "private": false,
