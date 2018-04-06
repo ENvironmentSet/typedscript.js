@@ -2,7 +2,7 @@
   "name": "DynamicTypedScript",
   "version": "0.0.1-beta.1",
   "description": "JavaScript library for strict programming.",
-  "private": true,
+  "private": false,
   "scripts": {
     "test": "mocha"
   },
@@ -38,8 +38,8 @@
   },
   "licenses": [
     {
-      "type": "GPL 2.0",
-      "url": "https://opensource.org/licenses/gpl-2.0.php"
+      "type": "MIT",
+      "url": "https://opensource.org/licenses/mit-license.php"
     }
   ]
 }
