@@ -1,8 +1,8 @@
 {
-  "name": "d_typedscript",
+  "name": "typedscript.js",
   "version": "0.0.1-beta.1",
   "description": "JavaScript library for strict programming.",
-  "private": false,
+  "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
@@ -17,15 +17,15 @@
     "url": "https://github.com/ENvironmentSet/DynamicTypedScript/issues"
   },
   "license": "GPL2",
-  "authors": [
-    "EnvironmentSet",
-    "CreeJee"
-  ],
+  "author": {
+    "name": "ENvironmentSet",
+    "email": "herryseo1@gmail.com",
+    "url": "https://github.com/ENvironmentSet"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ENvironmentSet/DynamicTypedScript"
   },
-  "main": "index.js",
   "engines": {
     "node": ">= 6.0.0"
   },
