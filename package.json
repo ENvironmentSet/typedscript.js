@@ -1,6 +1,6 @@
 {
   "name": "typedscript.js",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.2",
   "description": "JavaScript library for strict programming.",
   "main": "index.js",
   "scripts": {
@@ -14,9 +14,8 @@
   ],
   "bugs": {
     "email": "sbshw1@naver.com",
-    "url": "https://github.com/ENvironmentSet/DynamicTypedScript/issues"
+    "url": "https://github.com/ENvironmentSet/typedscript.js/issues"
   },
-  "license": "GPL2",
   "author": {
     "name": "ENvironmentSet",
     "email": "herryseo1@gmail.com",
@@ -24,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ENvironmentSet/DynamicTypedScript"
+    "url": "https://github.com/ENvironmentSet/typedscript.js"
   },
   "engines": {
     "node": ">= 6.0.0"
