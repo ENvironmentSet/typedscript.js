@@ -1,6 +1,6 @@
 {
   "name": "typedscript.js",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1-beta.1",
   "description": "JavaScript library for strict programming.",
   "main": "index.js",
   "scripts": {
