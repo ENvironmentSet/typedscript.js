@@ -91,9 +91,9 @@ new Type(shape)를 통해 만들어진 타입 인스턴스를 반환합니다.
     //eqalus let int = new T.Integer
 
 #### T(variable)
-* \[Variable\] variable. Variable을 확장하는 생상자를 통해 만들어진 객체.
+* \[Variable\] variable. Variable을 확장하는 생상자를 통해 만들어진 객체 또는 Type 객체를 확장하지 않는 자바스크립트 값.
 
-variable에 담긴(variable.box)의 값을 반환합니다.
+만약, variable이 Variable 객체를 확장한다면 variable.box 를 반환하고. 아니라면 variable을 반환합니다.
 
 #### \[new\]T(type, value)
 * \[Type\] type. 인스턴스화 된 type.
@@ -116,6 +116,7 @@ Atomic 타입들은 lowercase로 명명된, 미리 생성된 인스턴스들이 
 
     let intType = T.integer;
     let floatType = T.float;
+       
 
 #### T.call(function, ...params)
 

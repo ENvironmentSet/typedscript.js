@@ -7,6 +7,7 @@ module.exports = (function() {
 	function T (type, shape) { // shape equals value
 		if(typeof type === 'function' && _.isExtends(type, Type)) return new type(shape);
 		else if(_.isExtends(type, variable)) return type._;
+		else if(!_.isExtends(type, Type)) return type;
 		else {
 			let tmp = new variable(type, shape);
 			if(new.target) return Object.assign(this, tmp);

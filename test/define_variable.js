@@ -1,6 +1,6 @@
 const T = require('../index');
 
-describe('Vairable test suit', function () {
+describe('Vairable test suit (standard ES8)', function () {
 
 	it('should be ok <Atomic>', function () {
 		console.log(T(T.integer, 1));
@@ -37,8 +37,12 @@ describe('Vairable test suit', function () {
 		try {
 			console.log(T.call(f, 1, 2));
 		} catch(e) {
-			console.log(e);
+			console.log(e.message);
 		}
 	});
+
+  it('should be ok T', function () {
+    console.log(T(1));
+  });
 
 });
