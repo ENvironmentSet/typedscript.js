@@ -1,0 +1,25 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module"
+  },
+  "extends": "airbnb-base",
+  "env": {
+    "browser": false,
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    "max-length": 0,
+    "global-require" : 0,
+    "no-param-reassign": 0,
+    "class-methods-use-this": 0,
+    "no-void" : 0
+  },
+  "plugins": ["import"],
+  "globals": {
+    "T": true,
+    "_": true,
+    "require" : true
+  }
+}

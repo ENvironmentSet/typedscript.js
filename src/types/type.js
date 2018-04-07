@@ -1,38 +1,34 @@
-'use strict';
+module.exports = (function () {
+  const _ = require('../utils');
 
-module.exports = (function() {
-	const _ = require('../utils');
+  class _Type {
+    constructor(shapes, predicate, init = _.identity) {
+      if (!predicate(shapes)) throw new TypeError(`${shapes} is invalid shape of type.`);
+      this.shape = init(shapes);
+    }
 
-	//기본값 설정 필요. 심볼을 이용하면 괜찮을 듯.
+    static validator() {
+      if (!_.isExtends(this, _Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
+      return true;
+    }
 
-	class _Type {
-		constructor(shapes, predicate, init = _.identity) {
-			if(!predicate(shapes)) throw new TypeError(`${shapes} is invalid shape of type.`);
-			this.shape = init(shapes);
-		}
+    validator(...args) {
+      return this.constructor.validator.apply(this, args);
+    }
 
-		static validator() {
-			if(!_.isExtends(this, _Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
-			return true;
-		}
+    static initializer(value) {
+      if (!_.isExtends(this, _Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
+      return value;
+    }
 
-		validator () {
-			return this.constructor.validator.apply(this, arguments);
-		}
+    initializer(...args) {
+      return this.constructor.initializer.apply(this, args);
+    }
 
-		static initializer(value) {
-			if(!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
-			return value;
-		}
+    toString() {
+      return `Type<${this.shape}>`;
+    }
+  }
 
-		initializer() {
-			return this.constructor.initializer.apply(this, arguments);
-		}
-
-		toString() {
-			return `Type<${this.shape}>`;
-		}
-	}
-
-	return _Type;
-})();
+  return _Type;
+}());
