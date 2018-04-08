@@ -17,6 +17,15 @@ module.exports = (function () {
       return `Variable<${this.type}, box<${this.box}>> }`;
     }
 
+    valueOf() {
+      return this.box;
+    }
+
+    get [Symbol.toStringTag]() {
+      return 'Variable';
+    }
+
+
     bind(fn) {
       return fn(this.box);
     }
