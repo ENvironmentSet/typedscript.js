@@ -4,24 +4,28 @@ module.exports = (function () {
 
   class _Interface extends Type {
     constructor(shapes) {
-      super(shapes);
+      super(shapes, _(_.every, _, _(_.isExtends, _, Type)));
     }
 
-    static validator(functions) {
+    static validator(struct) {
       if (!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
-      return _.every(this.shape, (value, index) => {
-        if (index in functions) {
-          return !value.validator(functions[index]);
+      return _.every(this.shape, (type, index) => {
+        if (_.has(struct, index)) {
+          return type.validator(struct[index]);
         } return false;
       });
     }
 
-    static initializer() {
+    static initializer(value) {
       if (!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
+      return value || _.reduce(this.shape, (memo, type, name) => {
+        memo[name] = type.initializer();
+        return memo;
+      }, {});
     }
 
     toString() {
-
+      return `Interface<${this.shape}>`;
     }
   }
 

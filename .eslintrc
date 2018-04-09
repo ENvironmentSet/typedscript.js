@@ -14,7 +14,8 @@
     "global-require" : 0,
     "no-param-reassign": 0,
     "class-methods-use-this": 0,
-    "no-void" : 0
+    "no-void" : 0,
+    "func-names": ["error", "never"]
   },
   "plugins": ["import"],
   "globals": {
