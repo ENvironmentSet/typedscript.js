@@ -9,11 +9,12 @@ module.exports = (function () {
 
     static validator(parameters) {
       if (!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
-      if (parameters[0] === _Function.defineBody && typeof parameters[1] === 'function') return true;
+      if (typeof parameters === 'function') return true;
       return _.every(this.shape, (type, index) => {
         if (_.has(parameters, index)) {
           return type.validator(parameters[index]);
-        } return false;
+        }
+        return false;
       });
     }
 
@@ -26,7 +27,6 @@ module.exports = (function () {
       return `Function<${this.shape}>`;
     }
   }
-  _Function.defineBody = Symbol('define function body');
 
   return _Function;
 }());

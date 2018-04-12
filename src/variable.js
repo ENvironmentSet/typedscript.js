@@ -1,4 +1,4 @@
-module.exports = (function () {
+module.exports = function () {
   const Type = require('./types/type');
 
   class Variable {
@@ -25,7 +25,6 @@ module.exports = (function () {
       return 'Variable';
     }
 
-
     bind(fn) {
       return fn(this.box);
     }
@@ -51,4 +50,4 @@ module.exports = (function () {
 
 
   return Variable;
-}());
+}();

@@ -61,7 +61,7 @@ T.Refernce <설계중>
         somethingOnlyAcceptInteger(n); // Bug!!!!
     }
     
-위와 같은 일이 벌어진다면 매우 끔찍하겠지요. 하지만 DTS는 위와 같은 문제를 예방해 줍니다.
+위와 같은 일이 벌어진다면 매우 끔찍하겠지요. 하지만 typedscript.js는 위와 같은 문제를 예방해 줍니다.
 
     function x () {
         let n = T(T.integer, 3);

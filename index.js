@@ -2,12 +2,31 @@ module.exports = (function () {
   const Variable = require('./src/variable');
   const _ = require('./src/utils');
   const Type = require('./src/types/type');
-  function T(type, shape) { // shape equals value
-    if (typeof type === 'function' && _.isExtends(type, Type)) return new type(shape);
-    else if (_.isExtends(type, Variable)) return type._;
-    else if (!_.isExtends(type, Type)) return type;
-
-    const tmp = new Variable(type, shape);
+  const Function = require('./src/types/function');
+  const libFunctions = require('./src/libFunctions');
+  function T(A, B, ...params) { // shape equals value
+    if (typeof A === 'function' && _.isExtends(A, Type)) return new A(B);
+    else if (_.isExtends(A, Variable) && typeof B === 'function') return A.bind(B);
+    else if (_.isExtends(A, Variable)) return A._;
+    else if (_.isExtends(A, Variable) && !_.isExtends(A.T, Function)) {
+      return libFunctions.call(A, [B, ...params]);
+    } else if (!_.isExtends(A, Type) && !_.isExtends(B, Variable)) {
+      switch (typeof A) {
+        case 'undefined':
+          return new Variable(T.undefined, A);
+        case 'boolean':
+          return new Variable(T.boolean, A);
+        case 'number':
+          return new Variable(T.float, A);
+        case 'string':
+          return new Variable(T.string, A);
+        case 'symbol':
+          return new Variable(T.symbol, A);
+        default:
+          throw new TypeError('only atomic value can be Variable by quick-type-inference system.');
+      }
+    } else if (!_.isExtends(A, Type)) return A;
+    const tmp = new Variable(A, B);
     if (new.target) return Object.assign(this, tmp);
     return tmp;
   }
@@ -36,7 +55,7 @@ module.exports = (function () {
     Struct: require('./src/types/struct'),
     // 'Interface' : require('./src/types/interface'),
     // 'Refernce' : require('./src/types/refernce'),
-    Function: require('./src/types/function'),
+    Function,
     Type,
-  }, require('./src/libFunctions'));
+  }, libFunctions);
 }());
