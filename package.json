@@ -10,7 +10,9 @@
     "type",
     "TypedScript",
     "types",
-    "strict"
+    "strict",
+    "coding",
+    "helper"
   ],
   "bugs": {
     "email": "sbshw1@naver.com",
