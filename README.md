@@ -8,7 +8,7 @@ typedscript.js는 함수형 프로그래밍을 지향하는 라이브러리입�
 #### 설치
 아직은, 브라우저를 지원하지 않습니다만 가까운 미래에 지원하도록 할 예정입니다.
 
-npm으로 설치하기
+[npm](https://www.npmjs.com/package/typedscript.js "npm link")으로 설치하기
 
     npm install typedscript.js
 
@@ -31,10 +31,9 @@ T.Undefined (undefined)
 Ion 타입은 아래의 친구들입니다.
 
 T.Array (배열)  
-T.Struct (객체)  
-T.Function <작업중>  
-T.Interface <작업 예정>  
-T.Refernce <설계중>  
+T.Struct (객체의 형태)  
+T.Function (함수)
+T.Interface <객체의 형식>  
 
 #### Hello, world
 
@@ -66,141 +65,3 @@ T.Refernce <설계중>
     }
     
  어떤가요? 이렇게, 타입 친구들이 여러분의 실수를 막아줍니다.
- 
-#### 나만의 타입 정의하기.
-
-좋습니다, 우리는 이제 타입 친구들의 이름과 능력도 알고. 같이 협업하는 방법도 알 게 되었습니다.
- 
-### API
-이 부분은, 정확하고 엄격한 정보를 좋아하시는 분들을 위해 준비되었습니다.
-typedscript.js 아래와 같이 불러오시면 됩니다.
-
-    const T = require('typedscript.js ');
-
-#### T
-
-T는 제네릭 프로그래밍을 지원하는 함수입니다. 즉, 인자에 따라 작동(behavior)이 달라집니다.
-
-#### T(Type\[, shape\])
-
-* \[Type\] Type. Type을 확장하는, 인스턴스화할 타입의 생성자.
-* \[Object\] shape. 인스턴스화 할 타입의 shape를 담은 객체.
-
-new Type(shape)를 통해 만들어진 타입 인스턴스를 반환합니다.
-
-    let int = T(T.Integer);
-    //eqalus let int = new T.Integer
-
-#### T(variable)
-* \[Variable\] variable. Variable을 확장하는 생상자를 통해 만들어진 객체 또는 Type 객체를 확장하지 않는 자바스크립트 값.
-
-만약, variable이 Variable 객체를 확장한다면 variable.box 를 반환하고. 아니라면 variable을 반환합니다.
-
-#### \[new\]T(type, value)
-* \[Type\] type. 인스턴스화 된 type.
-* \[value\] value. 새로 생성될 변수의 값이 될 값.
-
-variable.type = type, variable.box = value를 갖는 새 변수를 생성하고, 반환합니다.
-
-    let x = T(new T.Integer, 1);
-    //or
-    let y = new T(new T.Integer, 2);
-    
-#### T\[Type\]
-Type의 생성자입니다.
-    
-    let intType = T.Integer;
-    let arrType = T.Array;
-    
-#### T\[type\]
-Atomic 타입들은 lowercase로 명명된, 미리 생성된 인스턴스들이 존재합니다.
-
-    let intType = T.integer;
-    let floatType = T.float;
-
-#### T(function, ...params)
-
-* \[Function\] function. 호출 될 Typed Function.
-* \[Anything\] ...params. function의 arguments.
-
-#### T(atomic value)
-
-* \[Primary type\] 자바스크립트의 원시 타입.
-
-자바스크립트 원시 타입의 경우 타입 객체를 지정하지 않고 타입 추론 기능을 이용해서 간단하게 변수를 만들 수 있습니다.       
-
-#### T.call(function, ...params)
-
-* \[Function\] function. 호출 될 Typed Function.
-* \[Anything\] ...params. function의 arguments.
-
-params가 Typed Function의 인자에 적합한 타입들을 가지면 호출되고, 결과값을 반환한다.
-   
-#### variable.validator(...params)
-* ...\[Anything\] params
-variable의 type의 validator에게 params를 인자로서 넘긴 실행 결과를 반환한다. 
-
-#### variable.toString()
-
-variable을 문자열로 표현한 형식을 반환한다.
-
-> 아직 개발진은 variable과 type의 표준 문자열 표기 형식을 정하지 못했습니다. 그러므로 디버깅 용도로만 사용하시길 바랍니다.
-
-#### variable.bind(function)
-function(variable.box)의 실행 결과를 반환한다.
-
-#### \[getter, setter\]variable._ \[=  newValue\]
-getter의 경우, variable.box를 반환하며, setter의 경우, 값을 검사한 후. 변수에 적합한 값이면 variable.box의 값을 newValue로 변경한다.
-
-#### \[getter, setter\]variable.T \[newType\]
-getter 경우, variable.type을 반환하고. setter의 경우, 값을 type.initializer를 통해 초기화 후 variable.type을 newType으로 변경한다. 
-    
-#### Atomic 타입
-
-Integer 타입
-
-* 정수만 값으로 허용.
-
-Float 타입
-
-* 실수만 값으로 허용.
-
-Boolean 타입 
-
-* 불 값만 값으로 허용.
-
-Null 타입
-
-* 널 값만 값으로 허용.
-
-String 타입
-
-* 문자열 값만 값으로 허용.
-
-Symbol 타입
-
-* 심볼 값만 값으로 허용.
-  
-Undefined 타입
-
-* undefined 값만 타입으로 허용. 
-
-#### Ion 타입
-
-Array 타입
-
-* shape 타입만 담은 배열만 값으로 허용.
-
-Struct 타입
-
-* shape의 구조를 갖는 객체만 값으로 허용.
-
-Function 타입
-
-* shape의 구조에 맞는 인자만 허용.
-
-
-    let ints = T(T.Struct, { a : T.integer, b : T.integer});
-    let shape = T(T.Function, [ints, ints]);
-    let f = T(shape, (x, y) => x.a+x.b+y.a+y.b);
-    console.log(T(f, { a : 1, b : 2}, { a : 3, b : 4}));
