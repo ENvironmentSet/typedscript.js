@@ -32,8 +32,8 @@ Ion 타입은 아래의 친구들입니다.
 
 T.Array (배열)  
 T.Struct (객체의 형태)  
-T.Function (함수)
-T.Interface <객체의 형식>  
+T.Function (함수)  
+T.Interface (객체의 형식)   
 
 #### Hello, world
 
