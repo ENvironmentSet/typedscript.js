@@ -75,13 +75,13 @@ T.Refernce <설계중>
  
 #### 나만의 타입 정의하기.
 
-좋습니다, 우리는 이제 타입 친구들의 이름과 능력도 알고. 같이 혐업하는 방법도 알 게 되었습니다.
+좋습니다, 우리는 이제 타입 친구들의 이름과 능력도 알고. 같이 협업하는 방법도 알 게 되었습니다.
  
 ### API
 이 부분은, 정확하고 엄격한 정보를 좋아하시는 분들을 위해 준비되었습니다.
-DynamicTypedScript는 아래와 같이 불러오시면 됩니다.
+typedscript.js 아래와 같이 불러오시면 됩니다.
 
-    const T = require('DynamicTypedScript');
+    const T = require('typedscript.js ');
 
 #### T
 
@@ -123,7 +123,17 @@ Atomic 타입들은 lowercase로 명명된, 미리 생성된 인스턴스들이 
 
     let intType = T.integer;
     let floatType = T.float;
-       
+
+#### T(function, ...params)
+
+* \[Function\] function. 호출 될 Typed Function.
+* \[Anything\] ...params. function의 arguments.
+
+#### T(atomic value)
+
+* \[Primary type\] 자바스크립트의 원시 타입.
+
+자바스크립트 원시 타입의 경우 타입 객체를 지정하지 않고 타입 추론 기능을 이용해서 간단하게 변수를 만들 수 있습니다.       
 
 #### T.call(function, ...params)
 
@@ -198,8 +208,6 @@ Function 타입
 
     let ints = T(T.Struct, { a : T.integer, b : T.integer});
     let shape = T(T.Function, [ints, ints]);
-    let f = T(shape, \[T.Function.defineBody, (x, y) => x.a+x.b+y.a+y.b\]);
-    console.log(T.call(f, { a : 1, b : 2}, { a : 3, b : 4}));
-    
-> Function 타입의 경우,변수 정의 시 T.Function.defineBody 심볼을 첫 번째 요소로 하고, 그 뒤에 함수를 넘긴다. 이는 곳 패치될 레거시 요소지만, 아직까지는 사용된다.
+    let f = T(shape, (x, y) => x.a+x.b+y.a+y.b);
+    console.log(T(f, { a : 1, b : 2}, { a : 3, b : 4}));
    
