@@ -27,10 +27,10 @@ describe('Vairable test suit (standard ES8)', () => {
   });
 
   it('should be ok <Function> 3', () => {
-    const shape = T(T.Function, [T.boolean, T.boolean]);
-    const f = T(shape, (x, y) => x && y);
+    const shape = T(T.Function, [T.integer]);
+    const f = T(shape, x => x + 4);
     try {
-      return T(f, 1, 2);
+      return T(f, 1);
     } catch (e) {
       return e;
     }

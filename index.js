@@ -7,8 +7,8 @@ module.exports = (function () {
   function T(A, B, ...params) { // shape equals value
     if (typeof A === 'function' && _.isExtends(A, Type)) return new A(B);
     else if (_.isExtends(A, Variable) && typeof B === 'function') return A.bind(B);
-    else if (_.isExtends(A, Variable) && !_.isExtends(A.T, Function)) {
-      return libFunctions.call(A, [B, ...params]);
+    else if (_.isExtends(A, Variable) && _.isExtends(A.T, Function)) {
+      return libFunctions.call(A, ...[B, ...params]);
     } else if (_.isExtends(A, Variable)) return A._;
     else if (!_.isExtends(A, Type) && !_.isExtends(B, Variable)) {
       switch (typeof A) {
