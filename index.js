@@ -1,9 +1,10 @@
-module.exports = (function () {
+module.exports = function () {
   const Variable = require('./src/variable');
   const _ = require('./src/utils');
   const Type = require('./src/types/type');
   const Function = require('./src/types/function');
   const libFunctions = require('./src/libFunctions');
+
   function T(A, B, ...params) { // shape equals value
     if (typeof A === 'function' && _.isExtends(A, Type)) return new A(B);
     else if (_.isExtends(A, Variable) && typeof B === 'function') return A.bind(B);
@@ -30,6 +31,7 @@ module.exports = (function () {
     if (new.target) return Object.assign(this, tmp);
     return tmp;
   }
+
   T.prototype = Object.create(Variable.prototype, {
     constructor: {
       value: Variable,
@@ -53,9 +55,8 @@ module.exports = (function () {
     string: new (require('./src/types/string'))(),
     Array: require('./src/types/array'),
     Struct: require('./src/types/struct'),
-    // 'Interface' : require('./src/types/interface'),
-    // 'Refernce' : require('./src/types/refernce'),
+    Interface: require('./src/types/interface'),
     Function,
     Type,
   }, libFunctions);
-}());
+}();
