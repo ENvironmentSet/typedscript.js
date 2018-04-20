@@ -8,9 +8,9 @@ module.exports = (function () {
     }
 
     static validator(values) {
-      if (_.isExtends(this, Type)) {
+      if (_.isExtends(this, Type) && _.isArray(values)) {
         const validator = _.bind(this.shape.validator, this.shape);
-        return _.every(values, validator) && _.isArray(values);
+        return _.size(values) === 0 ? true : _.every(values, validator);
       } throw new Error('Cannot call validator without binding this as instanceof class Type');
     }
 

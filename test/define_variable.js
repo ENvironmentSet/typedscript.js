@@ -37,4 +37,9 @@ describe('Vairable test suit (standard ES8)', () => {
   });
 
   it('should be ok T.bind', () => T(1).bind(v => v + 1));
+
+  it('should be ok Struct.self', () => {
+    const shape = T(T.Struct, { self: T.Struct.self, int: T.integer });
+    return T(shape, { self: { self: null, int: 2 }, int: 1 });
+  });
 });

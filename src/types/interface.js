@@ -12,7 +12,7 @@ module.exports = (function () {
       return _.every(this.shape, (type, index) => {
         if (_.has(struct, index)) {
           return type.validator(struct[index]);
-        } return false;
+        } return true;
       });
     }
 
