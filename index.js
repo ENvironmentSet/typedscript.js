@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = (function () {
   const Variable = require('./src/variable');
   const _ = require('./src/utils');
   const Type = require('./src/types/type');
@@ -59,4 +59,4 @@ module.exports = function () {
     Function,
     Type,
   }, libFunctions);
-}();
+}());
