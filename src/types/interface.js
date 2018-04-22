@@ -9,7 +9,7 @@ module.exports = (function () {
 
     static validator(struct) {
       if (!_.isExtends(this, Type)) throw new Error('Cannot call validator without binding this as instanceof class Type');
-      return _.every(this.shape, (type, index) => {
+      return _.size(this.shape) === 0 ? true : _.every(this.shape, (type, index) => {
         if (_.has(struct, index)) {
           return type.validator(struct[index]);
         } return true;
